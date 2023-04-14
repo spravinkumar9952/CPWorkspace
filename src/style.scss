@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+$nav-col: #88D2E3;
+$card-col: #ecb893;
+
+
+
+*{
+    font-family: 'Josefin Sans', sans-serif;;
+}
+
+
+.nav-bar {
+    background-color: $nav-col;
+    width: 100vw;
+    padding: 1rem;
+    h1{
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 2rem;
+    }
+}
+
+
+.link{
+    text-decoration: none;
+    color: black;
+
+    &:hover{
+        color: white;
+    }
+}
+
+
+.cell{
+    background-color: #88D2E3;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid black;
+
+    span{
+        color: red;
+        margin-left: 2px;
+    }
+
+    &:active{
+        background-color: yellow;
+    }
+}
+
+.row{
+    flex-direction: row;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.link-cont {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 1rem;
+    margin: 1rem;
+
+    .link{
+        background-color: $card-col;
+        width: 10rem;
+        height: 5rem;
+        border-radius: 0.2rem;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        padding: auto;
+
+        &:hover{
+            scale: 1.1;
+        }
+        
+    }
+}
+
+.canvas-stage {
+    border: 1px solid black;
+}
+
+
+.input-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin: 2rem;
+
+    input{
+        width: 80%;
+    }
+}
+
+
+.info-container{
+
+    span{
+        color: red;
+    }
+}
