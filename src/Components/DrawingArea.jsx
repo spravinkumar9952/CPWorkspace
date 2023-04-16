@@ -6,8 +6,8 @@ import { useEffect, useState, useRef } from 'react';
 const DrawingArea = ({onClearLines, clearLines}) => {
 
     const [lines, setLines] = useState([]);
-    const width = window.innerWidth;
-    const hight = window.innerHeight;
+    const width = 1400;
+    const hight = 650;
     const isDrawing = useRef(false);
 
     useEffect(() => {
@@ -47,11 +47,11 @@ const DrawingArea = ({onClearLines, clearLines}) => {
     };
 
     return (
-        <div className="draw-area text-center text-dark">
+        <div className="text-center text-dark">
             
             <Stage
-                width={width}
-                height={hight}
+                width={1400}
+                height={650}
                 onMouseDown={handleMouseDown}
                 onMousemove={handleMouseMove}
                 onMouseup={handleMouseUp}
@@ -63,7 +63,7 @@ const DrawingArea = ({onClearLines, clearLines}) => {
                         <Line
                         key={i}
                         points={line.points}
-                        stroke="#df4b26"
+                        stroke="#ffffff"
                         strokeWidth={2}
                         tension={0.5}
                         lineCap="round"

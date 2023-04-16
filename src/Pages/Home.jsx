@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
         <Navbar/>
-
+        
         <div className="container link-cont ">
             <Link to='/draw' className='link align-baseline'>Draw</Link>
             <Link to='/graph' className='link text-center align-middle'>Graph</Link>
