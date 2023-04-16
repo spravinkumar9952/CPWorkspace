@@ -7,6 +7,7 @@ import Grid from './Pages/Grid';
 import Home from './Pages/Home';
 import Draw from './Pages/Draw';
 import String from './Pages/String';
+import Number from "./Pages/Number";
 
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/graph" element={<Graph/>}/>
           <Route path="/grid" element={<Grid/>}/>
           <Route path='/string' element={<String/>}/>
+          <Route path='/number' element={<Number/>}/>
         </Routes>
       </BrowserRouter>
     </div>
