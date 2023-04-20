@@ -73,6 +73,11 @@ export default function String() {
         <div>
             <Navbar/>
             
+            <div className="info">
+                <h3>String</h3>
+                <p>You find out the properties of the string here.</p>
+            </div>
+
             <div className="container input-container">
                 <input type="text" name="text" id="text" className='align-items-center' placeholder='Enter the string' onChange = {(e) => setText(e.target.value)}/>
             </div>

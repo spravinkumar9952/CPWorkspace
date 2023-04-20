@@ -11,6 +11,7 @@ export default function String() {
     const [hex, setHex] = useState(0);
     const [catalan, setCatalan] = useState("False");
     const [fibonocci, setFibonocci] = useState("False");
+    const [gcd, setGcd] = useState(0);
 
     const  isCatalan =() => {
 
@@ -64,20 +65,53 @@ export default function String() {
         return res;
     }
 
-    const parseInput = (text) => {
-        setNumbers(text.split(","));
+
+
+    function egcd(a, b) {
+        if (a == 0)
+            return b;
+
+        while (b != 0) {
+            if (a > b)
+                a = a - b;
+            else
+                b = b - a;
+        }
+
+        return a;
+    }
+    const getGcd = () => {
+        let gcd = numbers[0];
+        for(let i of numbers){
+            gcd = egcd(i, gcd);
+        }
+
+        return gcd;
+    }
+
+    const parseInput = (e) =>{
+        e.preventDefault();
+        setNumbers(e.target.text.value.split(","));
     }
 
     useEffect(()=>{
         
         setPrime(isPrime() );
-        // setBinary((number >>> 0).toString(2));
-        // setOctal((number >>> 0).toString(8));
-        // setHex((number >>> 0).toString(16));
+        setBinary(numbers.map((ele) => {
+            return (parseInt(ele) >>> 0).toString(2) + ", ";
+        }))
+        setOctal(numbers.map((ele) => {
+            return (parseInt(ele) >>> 0).toString(8) + ", ";
+        }));
+        setHex(numbers.map((ele) => {
+            return (parseInt(ele) >>> 0).toString(16) + ", ";
+        }));
         setCatalan(isCatalan());
+
         setFibonocci(isFinbonocci());
 
-        console.log(prime, catalan, fibonocci);
+        setGcd(getGcd());
+
     }, [numbers]);
 
     return (
@@ -85,7 +119,11 @@ export default function String() {
             <Navbar/>
 
             <div className="container input-container">
-                <input type="text" name="text" id="text" className='align-items-center' placeholder='Enter the number' onChange = {(e) => parseInput(e.target.value)}/>
+                <form onSubmit={parseInput}>
+                <input type="text" name="text" id="text" className='text' placeholder='Enter the number'/>
+                <button>Build</button>
+                </form>
+                
             </div>
 
             <div className="container info-container text-center">
@@ -110,10 +148,12 @@ export default function String() {
                         <td>is Fibbanoci Number: </td>
                         <td>{fibonocci}</td>
                     </tr>
+                    
                     <tr>
                         <td>Binary Form: </td>
                         <td>{binary}</td>
                     </tr>
+
                     <tr>
                         <td>Octal Form: </td>
                         <td>{octal}</td>
@@ -122,6 +162,11 @@ export default function String() {
                     <tr>
                         <td>Hexadecimal Form: </td>
                         <td>{hex}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Gcd: </td>
+                        <td>{gcd}</td>
                     </tr>
                 </table>
             </div>

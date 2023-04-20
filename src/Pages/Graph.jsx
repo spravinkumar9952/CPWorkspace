@@ -87,15 +87,25 @@ export default function Graph() {
     return (
 
         <div className='graph'>
+            <Navbar/>
 
-            <form onSubmit={handleSubmit}>
-                <textarea name="graphInput" cols="30" rows="10">
+            <div className="graph-input-container">
+                <div className="info">
+                    <h1>Graph</h1>
+                    <p>You can visulize your graph by using this tool. it is currently supports only for unweighted directed graphs. Working on others features also.
+                    </p>
 
-                </textarea>
-                <button>Submit</button>
-            </form>
-        
-         
+                    <p>Give the edges like this:<br/>
+                        <span>1 2</span><br/><span>2 3</span>
+                    </p>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <textarea name="graphInput" cols="30" rows="10">
+                    </textarea>
+                    <button>Build Graph</button>
+                </form>
+            </div>
+            
         </div>
         
     );

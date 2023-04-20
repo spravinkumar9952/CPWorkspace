@@ -67,6 +67,13 @@ export default function Grid() {
         <div>
             <Navbar />
 
+            <div className="info">
+                <h3>Grid</h3>
+                <p>You can enter your grid size. If you touch the cell it will toggle the color. You can also enter the by clicking the top of the cell.</p>
+
+                
+            </div>
+
             <div className='container input-container'>
                 <input type="number" name="row" id="row" placeholder='Enter no of rows (Maximum 15 rows)' required onChange={e => setNumRows(e.target.value)} />
                 <input type="number" name="col" id="col" placeholder='Enter no of cols (Maximum 15 cols)' required onChange={e => setNumCols(e.target.value)} />
