@@ -1,101 +1,110 @@
 import React from 'react'
 import Navbar from '../Components/Navbar'
-import Graphs from 'react-graph-vis'
-import { useState,useRef } from 'react';
+import Graphs from 'react-graph-visualizer'
+import { useState, useRef } from 'react';
+import { useEffect } from 'react';
+
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function Graph() {
-    const [edges, setEdges] = useState([]);
-    const [nodes,setNodes] = useState([]);
-    const key=useRef(1);
 
-    const graph = {
-        nodes:nodes,
-        edges:edges
-    };
+   const [graph,setGraph]=useState({
+    nodes: [
+      {
+        name: "A",
+        id: 1
+      },
+      {
+        name: "B",
+        id: 2
+      }
+    ],
+    links: [
+      {
+        source: 1,
+        target: 2,
+        label: "A-B"
+      }
+    ]
+  })
 
-    const options = {
-        layout: {
-            hierarchical: true
-        },
-        edges: {
-            color: "#000000"
-        },
-        nodes: {
-            color: "#1cd553"
-        },
-        height: "500px"
-    };
+  const gref=useRef()
 
-    const events = {
-        select: function (event) {
-
-            var { nodes, edges } = event;
-        }
-    };
 
 
     const parseInput = (input) =>{
-        
-    }
+        const lines = input.split("\n");
+        const edges = [];
 
-    const isNodeExist = (node,inputNodes)=>{
-        
-        
-        for(let temp of inputNodes){
-            if(temp.id==node)return true;
-        }
-
-        return false;
-    }
-
-    const createNode = (id)=>{
-        return {id:id,label:"n"+id,weight:5}
-    }
-
-    const handleSubmit = (e) =>{
-
-        e.preventDefault()
-        let inputEdges=e.target.graphInput.value.split("\n");
-        let inputNodes=[];
-        
-        for(let edge of inputEdges){
-
-            let v=edge.split(" ");
+        for(let line of lines){
+            if(line == "")
+                continue;
             
-            if(!isNodeExist(v[0],inputNodes))
-            inputNodes.push(createNode(v[0]));
-            if(!isNodeExist(v[1],inputNodes))
-            inputNodes.push(createNode(v[1]));
-
-            edges.push({from:v[0],to:v[1]});
+            edges.push(
+                {
+                    source: parseInt(line.split(" ")[0]),
+                    target: parseInt(line.split(" ")[1]),
+                    label: parseInt(line.split(" ")[2])
+                }
+            );
         }
-        
-        setNodes(inputNodes);
 
+        const nodeSet = new Set();
+        const nodeMap = new Map(); // added a Map to store nodes by id
+
+        for (let edge of edges) {
+            const sourceNode = { name: edge.source.toString(), id: edge.source };
+            const targetNode = { name: edge.target.toString(), id: edge.target };
+
+            // add source node to set and map
+            if (!nodeMap.has(sourceNode.id)) {
+                nodeSet.add(sourceNode);
+                nodeMap.set(sourceNode.id, sourceNode);
+            }
+
+            // add target node to set and map
+            if (!nodeMap.has(targetNode.id)) {
+                nodeSet.add(targetNode);
+                nodeMap.set(targetNode.id, targetNode);
+            }
+        }
+                
+        console.log(nodeSet);
+
+        return {links: edges, nodes: Array.from(nodeSet)};
+        
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newGraph = parseInput(e.target.graphInput.value);
+        gref.current.setGraph(newGraph)
+    }
+
     return (
+
         <div className='graph'>
 
-            <Navbar/>
-
-            <form onSubmit={handleSubmit} className='graph-form'>
-                <textarea name="graphInput"  cols="30" rows="10">
+            <form onSubmit={handleSubmit}>
+                <textarea name="graphInput" cols="30" rows="10">
 
                 </textarea>
-                <button type="submit">Submit</button>
+                <button>Submit</button>
             </form>
-
-
-            <Graphs
-        key={key.current++}       
-        graph={graph}
-        options={options}
-        events={events}
-        getNetwork={network => {
-            //  if you want access to vis.js network api you can set the state in a parent component using this property
-        }}
-    />
-
+         
+          
+            <Graphs className='graph-comp'
+                backgroundColor={"transparent"}
+                ref={gref}
+                initialGraph={graph}
+                width={1400}
+                height={600}
+                linkStyle={{directed:true}}
+                labelStyle={{ show: true, color: "green", size: 25 }}
+                nodeStyle = {{background: "pink", borderColor: "black" , borderWidth: 1}}
+            />
+         
         </div>
+        
     );
 }
