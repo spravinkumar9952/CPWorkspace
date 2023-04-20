@@ -6,31 +6,31 @@ import { useEffect } from 'react';
 
 import { Navigate, useNavigate } from 'react-router-dom';
 
+import ShowGraph from './ShowGraph';
+
 export default function Graph() {
 
-   const [graph,setGraph]=useState({
-    nodes: [
-      {
-        name: "A",
-        id: 1
-      },
-      {
-        name: "B",
-        id: 2
-      }
-    ],
-    links: [
-      {
-        source: 1,
-        target: 2,
-        label: "A-B"
-      }
-    ]
-  })
+    const navigate = useNavigate()
 
-  const gref=useRef()
-
-
+    const [graph,setGraph]=useState({
+        nodes: [
+          {
+            name: "A",
+            id: 1
+          },
+          {
+            name: "B",
+            id: 2
+          }
+        ],
+        links: [
+          {
+            source: 1,
+            target: 2,
+            label: "A-B"
+          }
+        ]
+      })
 
     const parseInput = (input) =>{
         const lines = input.split("\n");
@@ -68,18 +68,21 @@ export default function Graph() {
                 nodeMap.set(targetNode.id, targetNode);
             }
         }
-                
-        console.log(nodeSet);
 
         return {links: edges, nodes: Array.from(nodeSet)};
         
     }
 
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newGraph = parseInput(e.target.graphInput.value);
-        gref.current.setGraph(newGraph)
+        const currGraph = parseInput(e.target.graphInput.value);
+
+
+        navigate('/show-graph', {state: {graph: currGraph}});
     }
+
 
     return (
 
@@ -91,18 +94,7 @@ export default function Graph() {
                 </textarea>
                 <button>Submit</button>
             </form>
-         
-          
-            <Graphs className='graph-comp'
-                backgroundColor={"transparent"}
-                ref={gref}
-                initialGraph={graph}
-                width={1400}
-                height={600}
-                linkStyle={{directed:true}}
-                labelStyle={{ show: true, color: "green", size: 25 }}
-                nodeStyle = {{background: "pink", borderColor: "black" , borderWidth: 1}}
-            />
+        
          
         </div>
         
