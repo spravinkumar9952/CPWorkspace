@@ -95,7 +95,6 @@ export default function String() {
     }
 
     useEffect(()=>{
-        
         setPrime(isPrime() );
         setBinary(numbers.map((ele) => {
             return (parseInt(ele) >>> 0).toString(2) + ", ";

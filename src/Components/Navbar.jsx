@@ -10,7 +10,7 @@ export default function Navbar() {
   const navigateHome = () => {
     navigate('/');
   }
-
+  
   return (
     <div className='nav-bar text-center'>
         
